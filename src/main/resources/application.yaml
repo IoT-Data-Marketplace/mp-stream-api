@@ -1,0 +1,9 @@
+server:
+  port: ${MP.KAFKA.REST.PROXY.PORT}
+
+
+services:
+  kafka:
+    clusterId: ${MP.KAFKA.CLUSTER.ID}
+    restApi:
+      url: ${MP.KAFKA.REST.URL}
