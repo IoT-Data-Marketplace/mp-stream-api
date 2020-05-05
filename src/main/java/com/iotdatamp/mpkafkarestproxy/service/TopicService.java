@@ -21,7 +21,7 @@ public class TopicService {
         OkHttpClient client = new OkHttpClient();
         String requestBody = getCreateTopicRequestBody(createTopicDTO.getTopicName());
         MediaType mediaType = MediaType.parse("application/vnd.api+json");
-        RequestBody body = RequestBody.create(mediaType, requestBody);
+        RequestBody body = RequestBody.create(requestBody, mediaType);
         Request request = new Request.Builder()
                 .url(properties.getKafkaRestUrl()+ "/v3/clusters/" + properties.getKafkaClusterId() + "/topics")
                 .post(body)
