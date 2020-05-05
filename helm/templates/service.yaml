@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mp-kafka-rest-proxy.fullname" . }}
+  labels:
+    {{- include "mp-kafka-rest-proxy.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ required "A valid .Values.global.mpKafkaRestProxyPort entry required!" .Values.global.mpKafkaRestProxyPort }}
+      targetPort: {{ required "A valid .Values.global.mpKafkaRestProxyPort entry required!" .Values.global.mpKafkaRestProxyPort }}
+      protocol: TCP
+      name: {{ required "A valid .Values.global.mpKafkaRestProxyPortName entry required!" .Values.global.mpKafkaRestProxyPortName }}
+  selector:
+    {{- include "mp-kafka-rest-proxy.selectorLabels" . | nindent 4 }}

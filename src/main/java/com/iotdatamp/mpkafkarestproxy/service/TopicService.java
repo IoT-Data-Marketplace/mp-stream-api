@@ -1,23 +1,25 @@
 package com.iotdatamp.mpkafkarestproxy.service;
 
+import com.iotdatamp.mpkafkarestproxy.HttpResponseDTO;
 import com.iotdatamp.mpkafkarestproxy.config.PropertiesBean;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 import okhttp3.*;
 import com.iotdatamp.mpkafkarestproxy.dto.CreateTopicDTO;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
+@Log
 @Service
 @RequiredArgsConstructor
 public class TopicService {
 
     private final PropertiesBean properties;
 
-    public HttpStatus createTopic(final CreateTopicDTO createTopicDTO) throws IOException {
+    @SneakyThrows
+    public HttpResponseDTO createTopic(final CreateTopicDTO createTopicDTO) {
         OkHttpClient client = new OkHttpClient();
         String requestBody = getCreateTopicRequestBody(createTopicDTO.getTopicName());
         MediaType mediaType = MediaType.parse("application/vnd.api+json");
@@ -28,8 +30,11 @@ public class TopicService {
                 .addHeader("Content-Type", "application/vnd.api+json")
                 .addHeader("Accept", "application/vnd.api+json")
                 .build();
+        log.info("Creating a topic with name: " + createTopicDTO.getTopicName());
         Response response = client.newCall(request).execute();
-        return HttpStatus.resolve(response.code());
+        HttpResponseDTO responseDTO = HttpResponseDTO.builder().statusCode(response.code()).responseBody(response.body().string()).build();
+        log.info("Response: " + responseDTO.getResponseBody());
+        return responseDTO;
     }
 
 

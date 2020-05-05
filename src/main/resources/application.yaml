@@ -4,6 +4,6 @@ server:
 
 services:
   kafka:
-    clusterId: ${MP.KAFKA.CLUSTER.ID}
+    clusterId: ${CP.KAFKA.CLUSTER.ID}
     restApi:
-      url: ${MP.KAFKA.REST.URL}
+      url: ${CP.KAFKA.REST.URL}

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "mp-kafka-rest-proxy.fullname" . }}-test-connection"
+  labels:
+    {{- include "mp-kafka-rest-proxy.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "mp-kafka-rest-proxy.fullname" . }}:{{ .Values.global.mpKafkaRestProxyPort }}']
+  restartPolicy: Never

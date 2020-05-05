@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mp-kafka-rest-proxy.fullname" . }}
+  labels:
+    {{ include "mp-kafka-rest-proxy.labels" . | nindent 4 }}
+data:
+  MP_KAFKA_REST_PROXY_PORT: {{ required "A valid .Values.global.mpKafkaRestProxyPort entry required!" .Values.global.mpKafkaRestProxyPort | quote }}
+  CP_KAFKA_REST_URL: {{ include "cpKafkaRestUrl" . }}
+  CP_KAFKA_CLUSTER_ID: {{ required "A valid .Values.kafkaClusterId entry required!" .Values.kafkaClusterId }}
