@@ -26,7 +26,7 @@ public class TopicService {
         MediaType mediaType = MediaType.parse("application/vnd.api+json");
         RequestBody body = RequestBody.create(requestBody, mediaType);
         Request request = new Request.Builder()
-                .url(properties.getKafkaRestUrl() + "/v3/clusters/" + properties.getKafkaClusterId() + "/topics")
+                .url(properties.getKafkaRestUrl().concat("/v3/clusters/").concat(properties.getKafkaClusterId()).concat("/topics"))
                 .post(body)
                 .addHeader("Content-Type", "application/vnd.api+json")
                 .addHeader("Accept", "application/vnd.api+json")
