@@ -1,6 +1,5 @@
 package com.iotdatamp.mpkafkarestproxy.controller;
 
-import com.iotdatamp.mpkafkarestproxy.HttpResponseDTO;
 import com.iotdatamp.mpkafkarestproxy.dto.CreateTopicDTO;
 import com.iotdatamp.mpkafkarestproxy.service.TopicService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +19,7 @@ public class TopicController {
     @SneakyThrows
     @PostMapping
     public ResponseEntity<?> createTopic(@RequestBody CreateTopicDTO createTopicDTO) {
-        HttpResponseDTO response = topicService.createTopic(createTopicDTO);
-        return ResponseEntity.status(HttpStatus.valueOf(response.getStatusCode())).body(response.getResponseBody());
+        return topicService.createTopic(createTopicDTO);
     }
 
 }
