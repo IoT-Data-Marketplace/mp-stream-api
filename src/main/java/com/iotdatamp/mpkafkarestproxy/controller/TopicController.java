@@ -16,6 +16,11 @@ public class TopicController {
 
     private final TopicService topicService;
 
+    @GetMapping("/{topicName}")
+    public ResponseEntity<?> getTopic(@PathVariable String topicName) {
+        return topicService.getTopic(topicName);
+    }
+
     @SneakyThrows
     @PostMapping
     public ResponseEntity<?> createTopic(@RequestBody CreateTopicDTO createTopicDTO) {

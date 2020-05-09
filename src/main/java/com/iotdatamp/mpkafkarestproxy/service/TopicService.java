@@ -2,6 +2,7 @@ package com.iotdatamp.mpkafkarestproxy.service;
 
 import com.iotdatamp.mpkafkarestproxy.config.PropertiesBean;
 import com.iotdatamp.mpkafkarestproxy.dto.CreateTopicDTO;
+import com.iotdatamp.mpkafkarestproxy.dto.TopicSummaryDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
@@ -58,4 +59,20 @@ public class TopicService {
         return root.toString();
     }
 
+    @SneakyThrows
+    public ResponseEntity<?> getTopic(String topicName) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url(properties.getKafkaRestUrl().concat("/topics/").concat(topicName).concat("/partitions/0/offsets"))
+                .method("GET", null)
+                .build();
+        Response response = client.newCall(request).execute();
+        JSONObject jsonObject = new JSONObject(response.body().string());
+        TopicSummaryDTO topicSummaryDTO = TopicSummaryDTO.builder()
+                .topicName(topicName)
+                .topicSize(jsonObject.getInt("end_offset"))
+                .build();
+        return ResponseEntity.status(HttpStatus.valueOf(response.code())).body(topicSummaryDTO);
+    }
 }
