@@ -1,6 +1,5 @@
 package com.iotdatamp.mpkafkarestproxy.controller;
 
-import com.iotdatamp.mpkafkarestproxy.dto.CreateTopicDTO;
 import com.iotdatamp.mpkafkarestproxy.dto.NewMessagesDTO;
 import com.iotdatamp.mpkafkarestproxy.service.MessageService;
 import lombok.RequiredArgsConstructor;
