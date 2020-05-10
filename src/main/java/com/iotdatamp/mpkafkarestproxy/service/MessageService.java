@@ -35,4 +35,17 @@ public class MessageService {
         return ResponseEntity.status(HttpStatus.valueOf(response.code())).body(response.body().string());
     }
 
+    @SneakyThrows
+    public ResponseEntity<?> getMessages(final String topicName, final int offset, final int count) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url(properties.getKafkaRestUrl().concat("/topics/").concat(topicName)
+                        .concat("/partitions/0/messages?offset=").concat(String.valueOf(offset)).concat("&count=").concat(String.valueOf(count)))
+                .method("GET", null)
+                .build();
+        Response response = client.newCall(request).execute();
+        return ResponseEntity.status(HttpStatus.valueOf(response.code())).body(response.body().string());
+    }
+
 }
