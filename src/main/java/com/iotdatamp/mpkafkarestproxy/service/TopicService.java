@@ -71,7 +71,7 @@ public class TopicService {
         JSONObject jsonObject = new JSONObject(response.body().string());
         TopicSummaryDTO topicSummaryDTO = TopicSummaryDTO.builder()
                 .topicName(topicName)
-                .topicSize(jsonObject.getInt("end_offset"))
+                .topicSize(HttpStatus.valueOf(response.code()) != HttpStatus.OK ? 0 : jsonObject.getInt("end_offset"))
                 .build();
         return ResponseEntity.status(HttpStatus.valueOf(response.code())).body(topicSummaryDTO);
     }
