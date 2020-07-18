@@ -21,12 +21,13 @@ public class MessageService {
     ObjectMapper mapper = new ObjectMapper();
 
     @SneakyThrows
-    public ResponseEntity<?> sendMessages(final String topicName, final NewMessagesDTO newMessagesDTO) {
+    public ResponseEntity<?> sendMessages(final String topicName, final NewMessagesDTO newMessagesDTO, Headers tracingHeaders) {
         MediaType mediaType = MediaType.parse("application/vnd.kafka.binary.v2+json");
         RequestBody body = RequestBody.create(mediaType, mapper.writeValueAsString(newMessagesDTO));
         Request request = new Request.Builder()
                 .url(properties.getKafkaRestUrl().concat("/topics/").concat(topicName))
                 .post(body)
+                .headers(tracingHeaders)
                 .addHeader("Content-Type", "application/vnd.kafka.binary.v2+json")
                 .addHeader("Accept", "application/vnd.kafka.v2+json, application/vnd.kafka+json, application/json")
                 .addHeader("cache-control", "no-cache")
@@ -36,13 +37,14 @@ public class MessageService {
     }
 
     @SneakyThrows
-    public ResponseEntity<?> getMessages(final String topicName, final int offset, final int count) {
+    public ResponseEntity<?> getMessages(final String topicName, final int offset, final int count, Headers tracingHeaders) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
                 .url(properties.getKafkaRestUrl().concat("/topics/").concat(topicName)
                         .concat("/partitions/0/messages?offset=").concat(String.valueOf(offset)).concat("&count=").concat(String.valueOf(count)))
                 .method("GET", null)
+                .headers(tracingHeaders)
                 .build();
         Response response = client.newCall(request).execute();
         return ResponseEntity.status(HttpStatus.valueOf(response.code())).body(response.body().string());

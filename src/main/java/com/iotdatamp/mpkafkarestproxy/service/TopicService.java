@@ -21,7 +21,7 @@ public class TopicService {
     private final PropertiesBean properties;
 
     @SneakyThrows
-    public ResponseEntity<?> createTopic(final CreateTopicDTO createTopicDTO) {
+    public ResponseEntity<?> createTopic(final CreateTopicDTO createTopicDTO, Headers tracingHeaders) {
         OkHttpClient client = new OkHttpClient();
         String requestBody = getCreateTopicRequestBody(createTopicDTO.getTopicName());
         MediaType mediaType = MediaType.parse("application/vnd.api+json");
@@ -29,6 +29,7 @@ public class TopicService {
         Request request = new Request.Builder()
                 .url(properties.getKafkaRestUrl().concat("/v3/clusters/").concat(properties.getKafkaClusterId()).concat("/topics"))
                 .post(body)
+                .headers(tracingHeaders)
                 .addHeader("Content-Type", "application/vnd.api+json")
                 .addHeader("Accept", "application/vnd.api+json")
                 .build();
@@ -60,12 +61,13 @@ public class TopicService {
     }
 
     @SneakyThrows
-    public ResponseEntity<?> getTopic(String topicName) {
+    public ResponseEntity<?> getTopic(String topicName, Headers tracingHeaders) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
                 .url(properties.getKafkaRestUrl().concat("/topics/").concat(topicName).concat("/partitions/0/offsets"))
                 .method("GET", null)
+                .headers(tracingHeaders)
                 .build();
         Response response = client.newCall(request).execute();
         JSONObject jsonObject = new JSONObject(response.body().string());
