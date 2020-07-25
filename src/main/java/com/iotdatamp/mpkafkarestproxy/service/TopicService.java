@@ -43,13 +43,20 @@ public class TopicService {
         JSONObject attributes = new JSONObject();
         attributes.put("topic_name", topicName);
         attributes.put("partitions_count", 1);
-        attributes.put("replication_factor", 1);
+        attributes.put("replication_factor", 3);
 
+//        https://docs.confluent.io/current/installation/configuration/topic-configs.html
         JSONArray configs = new JSONArray();
-        JSONObject config = new JSONObject();
-        config.put("name", "cleanup.policy");
-        config.put("value", "compact");
-        configs.put(config);
+        JSONObject cleanUpConfig = new JSONObject();
+        cleanUpConfig.put("name", "cleanup.policy");
+        cleanUpConfig.put("value", "delete");
+        configs.put(cleanUpConfig);
+
+        JSONObject retentionConfig = new JSONObject();
+        retentionConfig.put("name", "retention.ms");
+        retentionConfig.put("value", -1);
+        configs.put(retentionConfig);
+
         attributes.put("configs", configs);
 
         JSONObject data = new JSONObject();
