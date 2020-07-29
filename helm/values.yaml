@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: 543164192837.dkr.ecr.eu-central-1.amazonaws.com/mp-kafka-rest-proxy
+  repository: 543164192837.dkr.ecr.eu-central-1.amazonaws.com/mp-stream-api
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -17,8 +17,8 @@ recreationFlag: 1
 global:
   namespaceName: ""
   recreationFlag: 1
-  mpKafkaRestProxyPort: 8060
-  mpKafkaRestProxyPortName: http-8060
+  mpStreamAPIPort: 8060
+  mpStreamAPIPortName: http-8060
 
 kafkaClusterId: ""
 cpKafkaRestPort: 8082

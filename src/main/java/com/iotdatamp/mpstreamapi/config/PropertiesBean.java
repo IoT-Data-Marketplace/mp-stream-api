@@ -1,4 +1,4 @@
-package com.iotdatamp.mpkafkarestproxy.config;
+package com.iotdatamp.mpstreamapi.config;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

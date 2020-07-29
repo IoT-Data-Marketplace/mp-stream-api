@@ -1,4 +1,4 @@
-package com.iotdatamp.mpkafkarestproxy.dto;
+package com.iotdatamp.mpstreamapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

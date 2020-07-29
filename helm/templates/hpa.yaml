@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "mp-kafka-rest-proxy.fullname" . }}
+  name: {{ include "mp-stream-api.fullname" . }}
   labels:
-    {{ include "mp-kafka-rest-proxy.labels" . | nindent 4 }}
+    {{ include "mp-stream-api.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name:  {{ include "mp-kafka-rest-proxy.fullname" . }}
+    name:  {{ include "mp-stream-api.fullname" . }}
   minReplicas: {{ .Values.hpa.minReplicas }}
   maxReplicas: {{ .Values.hpa.maxReplicas }}
   metrics:

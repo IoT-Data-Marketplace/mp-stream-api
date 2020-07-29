@@ -1,4 +1,4 @@
-package com.iotdatamp.mpkafkarestproxy.config;
+package com.iotdatamp.mpstreamapi.config;
 
 import lombok.extern.java.Log;
 import okhttp3.Headers;

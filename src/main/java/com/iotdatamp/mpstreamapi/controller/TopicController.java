@@ -1,11 +1,10 @@
-package com.iotdatamp.mpkafkarestproxy.controller;
+package com.iotdatamp.mpstreamapi.controller;
 
-import com.iotdatamp.mpkafkarestproxy.config.TracingHeaderInterceptorHelper;
-import com.iotdatamp.mpkafkarestproxy.dto.CreateTopicDTO;
-import com.iotdatamp.mpkafkarestproxy.service.TopicService;
+import com.iotdatamp.mpstreamapi.config.TracingHeaderInterceptorHelper;
+import com.iotdatamp.mpstreamapi.dto.CreateTopicDTO;
+import com.iotdatamp.mpstreamapi.service.TopicService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

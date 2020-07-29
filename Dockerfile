@@ -8,6 +8,6 @@ RUN mvn package -Dmaven.test.skip=true
 
 FROM openjdk:11.0.7-jre-slim
 WORKDIR /workspace/app
-COPY --from=imageBuilder /workspace/app/target/mpkafkarestproxy-0.0.1-SNAPSHOT.jar .
+COPY --from=imageBuilder /workspace/app/target/mpstreamapi-0.0.1-SNAPSHOT.jar .
 
-ENTRYPOINT ["java", "-jar", "mpkafkarestproxy-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "mpstreamapi-0.0.1-SNAPSHOT.jar"]

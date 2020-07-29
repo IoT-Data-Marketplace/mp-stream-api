@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "mp-kafka-rest-proxy.fullname" . }}
+  name: {{ include "mp-stream-api.fullname" . }}
   labels:
-    {{- include "mp-kafka-rest-proxy.labels" . | nindent 4 }}
+    {{- include "mp-stream-api.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "mp-kafka-rest-proxy.selectorLabels" . | nindent 6 }}
+      {{- include "mp-stream-api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "mp-kafka-rest-proxy.selectorLabels" . | nindent 8 }}
+        {{- include "mp-stream-api.selectorLabels" . | nindent 8 }}
       annotations:
         forceRecreate: {{ add .Values.global.recreationFlag .Values.recreationFlag | quote}}
     spec:
@@ -21,21 +21,21 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: {{ required "A valid .Values.global.mpKafkaRestProxyPortName entry required!" .Values.global.mpKafkaRestProxyPortName }}
-              containerPort: {{ required "A valid .Values.global.mpKafkaRestProxyPort entry required!" .Values.global.mpKafkaRestProxyPort }}
+            - name: {{ required "A valid .Values.global.mpStreamAPIPortName entry required!" .Values.global.mpStreamAPIPortName }}
+              containerPort: {{ required "A valid .Values.global.mpStreamAPIPort entry required!" .Values.global.mpStreamAPIPort }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: {{ .Values.livenessProbe.path }}
-              port: {{ required "A valid .Values.global.mpKafkaRestProxyPort entry required!" .Values.global.mpKafkaRestProxyPort }}
+              port: {{ required "A valid .Values.global.mpStreamAPIPort entry required!" .Values.global.mpStreamAPIPort }}
           readinessProbe:
             httpGet:
               path: {{ .Values.livenessProbe.path }}
-              port: {{ required "A valid .Values.global.mpKafkaRestProxyPort entry required!" .Values.global.mpKafkaRestProxyPort }}
+              port: {{ required "A valid .Values.global.mpStreamAPIPort entry required!" .Values.global.mpStreamAPIPort }}
 
           envFrom:
             - configMapRef:
-                name: {{ template "mp-kafka-rest-proxy.fullname" . }}
+                name: {{ template "mp-stream-api.fullname" . }}
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

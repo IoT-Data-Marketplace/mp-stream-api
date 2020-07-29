@@ -1,8 +1,8 @@
-package com.iotdatamp.mpkafkarestproxy.service;
+package com.iotdatamp.mpstreamapi.service;
 
-import com.iotdatamp.mpkafkarestproxy.config.PropertiesBean;
-import com.iotdatamp.mpkafkarestproxy.dto.CreateTopicDTO;
-import com.iotdatamp.mpkafkarestproxy.dto.TopicSummaryDTO;
+import com.iotdatamp.mpstreamapi.config.PropertiesBean;
+import com.iotdatamp.mpstreamapi.dto.CreateTopicDTO;
+import com.iotdatamp.mpstreamapi.dto.TopicSummaryDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
