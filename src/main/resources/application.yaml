@@ -1,5 +1,5 @@
 server:
-  port: ${MP.KAFKA.REST.PROXY.PORT}
+  port: ${MP.STREAM.API.PORT}
 
 
 services:

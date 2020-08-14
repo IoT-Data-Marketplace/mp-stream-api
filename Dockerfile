@@ -6,7 +6,7 @@ COPY pom.xml .
 COPY src src
 RUN mvn package -Dmaven.test.skip=true
 
-FROM openjdk:11.0.7-jre-slim
+FROM openjdk:11.0.8-jre-slim-buster
 WORKDIR /workspace/app
 COPY --from=imageBuilder /workspace/app/target/mpstreamapi-0.0.1-SNAPSHOT.jar .
 
